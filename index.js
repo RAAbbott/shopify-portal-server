@@ -1,14 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || '3060';
+const moment = require('moment');
 const Shopify = require('shopify-api-node');
 const shopify  = new Shopify({
     shopName: process.env.SHOP_NAME,
     apiKey: process.env.API_KEY,
     password: process.env.PASSWORD
 });
-require('dotenv').config();
 
 
 // Express Methods
@@ -33,6 +34,9 @@ app.listen(port, () => {
 app.get('/orders', async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); // If needed
+    // res.setHeader('Access-Control-Allow-Credentials', true); // If needed
     res.json(await formatOrders());
 });
 
@@ -40,19 +44,21 @@ app.get('/orders', async (req, res) => {
 // Helper Methods
 
 async function getOrders() {
-    return await shopify.order.list().then(orders => orders).catch(err => err);
+    console.log(await shopify.order.list({limit: 1}).then(orders => orders[0].line_items.forEach(item => console.log(item))).catch(err => err));
+    return await shopify.order.list({limit: 100}).then(orders => orders).catch(err => err);
 }
 
 async function formatOrders() {
     const orderList = [];
+    // const productList = [];
     const orders = await getOrders();
 
     orders.forEach(order => {
+        const productIds = [];
         const productList = [];
         order.line_items.forEach(product => {
             const variants = product.variant_title.split(' / ');
-            console.log(variants);
-            productList.push({
+            const productProperties = {
                 id: product.id,
                 orderId: order.id,
                 productName: product.title,
@@ -60,8 +66,15 @@ async function formatOrders() {
                 option2: 'Color',
                 variant1: variants.length >= 1 ? variants[0] : '',
                 variant2: variants.length >= 2 ? variants[1] : '',
-                custom: '-',       
-            });
+                productProperties: product.properties,
+                custom: product.properties.length ? product.properties[0].value : '-',
+                completed: false,
+            };
+
+            for (let i = 0; i < product.quantity; i++) {
+                productList.push(productProperties);
+            }
+            // productIds.push(product.id);
         });
         
         orderList.push({
@@ -70,10 +83,10 @@ async function formatOrders() {
             customerEmail: order.email,
             amount: order.total_price,
             note: order.note,
+            dateOrdered: moment(order.updated_at).format('MMM DD'),
             products: productList
         })
     });
-
 
     return orderList;
 
