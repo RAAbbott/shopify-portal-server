@@ -50,12 +50,11 @@ async function getOrders() {
 
 async function formatOrders() {
     const orderList = [];
-    // const productList = [];
+    const productList = [];
     const orders = await getOrders();
 
     orders.forEach(order => {
         const productIds = [];
-        const productList = [];
         order.line_items.forEach(product => {
             const variants = product.variant_title.split(' / ');
             const productProperties = {
@@ -73,8 +72,8 @@ async function formatOrders() {
 
             for (let i = 0; i < product.quantity; i++) {
                 productList.push(productProperties);
+                productIds.push(product.id);
             }
-            // productIds.push(product.id);
         });
         
         orderList.push({
@@ -88,6 +87,6 @@ async function formatOrders() {
         })
     });
 
-    return orderList;
+    return {orderList, productList};
 
 }
