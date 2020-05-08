@@ -6,11 +6,9 @@ const port = process.env.PORT || '3060';
 const moment = require('moment');
 const Shopify = require('shopify-api-node');
 const shopify  = new Shopify({
-    shopName: 'eom-test-store',
-    accessToken: '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'
-    // shopName: process.env.SHOP_NAME,
-    // apiKey: process.env.API_KEY,
-    // password: process.env.PASSWORD
+    shopName: process.env.SHOP_NAME,
+    apiKey: process.env.API_KEY,
+    password: process.env.PASSWORD
 });
 
 
