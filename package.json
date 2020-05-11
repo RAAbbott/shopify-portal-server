@@ -14,6 +14,7 @@
   "dependencies": {
     "@shopify/koa-shopify-auth": "^3.1.61",
     "co-body": "^6.0.0",
+    "compat": "^1.0.4",
     "cookie": "^0.4.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
