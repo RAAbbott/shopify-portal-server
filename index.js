@@ -128,9 +128,8 @@ app.get('/orders', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.redirect('http://localhost:8080');
+    res.redirect(clientAddress);
 })
-
 
 // Helper Methods
 
