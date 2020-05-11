@@ -12,7 +12,8 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET_KEY;
 const scopes = 'read_orders,read_products,read_customers';
-const forwardingAddress = "https://ca6c177b.ngrok.io"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://ca6c177b.ngrok.io"; // Replace this with your HTTPS Forwarding address (Server Address)
+const clientAddress = "xenodochial-curie-ca34f4" //Client Address
 const Shopify = require('shopify-api-node');
 let shopify;
 
