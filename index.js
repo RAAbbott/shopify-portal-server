@@ -13,7 +13,7 @@ const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET_KEY;
 const scopes = 'read_orders,read_products,read_customers';
 const forwardingAddress = "https://eom-shopify-server.herokuapp.com/"; // Replace this with your HTTPS Forwarding address (Server Address)
-const clientAddress = "xenodochial-curie-ca34f4" //Client Address
+const clientAddress = "https://xenodochial-curie-ca34f4.netlify.app/" //Client Address
 const Shopify = require('shopify-api-node');
 let shopify;
 
