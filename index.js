@@ -44,8 +44,7 @@ app.get('/orders', async (req, res) => {
 // Helper Methods
 
 async function getOrders() {
-    console.log(await shopify.order.list({limit: 1}).then(orders => orders[0].line_items.forEach(item => console.log(item))).catch(err => err));
-    return await shopify.order.list({limit: 100}).then(orders => orders).catch(err => err);
+    return await shopify.order.list({limit: 100, status: 'open', fulfillment_status: 'open'}).then(orders => orders).catch(err => err);
 }
 
 async function formatOrders() {
@@ -83,7 +82,7 @@ async function formatOrders() {
             customerEmail: order.email,
             amount: order.total_price,
             note: order.note,
-            dateOrdered: moment(order.updated_at).format('MMM DD'),
+            dateOrdered: moment(order.created_at).format('MMM DD'),
             products: productList
         })
     });
