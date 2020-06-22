@@ -125,7 +125,7 @@ app.get('/orders', async (req, res) => {
     shopName: process.env.SHOP_NAME,
     apiKey: process.env.API_KEY,
     password: process.env.PASSWORD
-  })
+  });
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
