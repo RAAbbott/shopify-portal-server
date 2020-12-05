@@ -150,7 +150,7 @@ app.post('/completeOrders', async (req, res) => {
   const updateTags = async () => {
     await asyncForEach(orders, async (orderId) => {
       try {
-        await shopify.order.update(orderId, {tags: 'EOM-READY'});
+        await shopify.order.update(orderId, {tags: tag});
         console.log('success');
       } catch (error) {
         console.log(error);
