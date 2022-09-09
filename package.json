@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@shopify/koa-shopify-auth": "^3.1.61",
+    "@shopify/koa-shopify-auth": "^3.1.63",
     "co-body": "^6.0.0",
     "compat": "^1.0.4",
     "cookie": "^0.4.1",
